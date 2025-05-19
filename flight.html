@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Flight Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="flight.html">Flight</a></li>
+                <li><a href="passenger.html">Passenger</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="airport.html">Airport</a></li>
+                <li><a href="airline.html">Airline</a></li>
+                <li><a href="aircraft.html">Aircraft</a></li>
+                <li><a href="baggage.html">Baggage</a></li>
+                <li><a href="payment.html">Payment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Flight Management</h2>
+        <button id="add-flight-btn" class="btn-primary">Add New Flight</button>
+        
+        <div class="filter-controls">
+            <select id="status-filter">
+                <option value="">All Statuses</option>
+                <option value="Terjadwal">Scheduled</option>
+                <option value="Ditunda">Delayed</option>
+                <option value="Dibatalkan">Cancelled</option>
+            </select>
+            <input type="date" id="date-filter">
+            <button id="apply-filter" class="btn-secondary">Apply Filter</button>
+        </div>
+        
+        <table id="flight-table">
+            <thead>
+                <tr>
+                    <th>Flight Number</th>
+                    <th>Airline</th>
+                    <th>Departure</th>
+                    <th>Arrival</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Available Seats</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filled by JavaScript -->
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Flight Modal -->
+    <div id="flight-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Add New Flight</h2>
+            <form id="flight-form">
+                <input type="hidden" id="flight-id" name="flight-id">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="flight-number">Flight Number:</label>
+                        <input type="text" id="flight-number" name="flight-number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="airline-code">Airline:</label>
+                        <select id="airline-code" name="airline-code" required>
+                            <option value="">Select Airline</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="departure-datetime">Departure:</label>
+                        <input type="datetime-local" id="departure-datetime" name="departure-datetime" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="arrival-datetime">Arrival:</label>
+                        <input type="datetime-local" id="arrival-datetime" name="arrival-datetime" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="origin-airport">Origin:</label>
+                        <select id="origin-airport" name="origin-airport" required>
+                            <option value="">Select Airport</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="destination-airport">Destination:</label>
+                        <select id="destination-airport" name="destination-airport" required>
+                            <option value="">Select Airport</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="available-seats">Available Seats:</label>
+                        <input type="number" id="available-seats" name="available-seats" min="0" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="status">Status:</label>
+                        <select id="status" name="status" required>
+                            <option value="Terjadwal">Scheduled</option>
+                            <option value="Ditunda">Delayed</option>
+                            <option value="Dibatalkan">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/flight.js"></script>
+</body>
+</html>

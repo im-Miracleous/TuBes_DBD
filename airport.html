@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airport Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Flight Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="flight.html">Flight</a></li>
+                <li><a href="passenger.html">Passenger</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="airport.html">Airport</a></li>
+                <li><a href="airline.html">Airline</a></li>
+                <li><a href="aircraft.html">Aircraft</a></li>
+                <li><a href="baggage.html">Baggage</a></li>
+                <li><a href="payment.html">Payment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Airport Management</h2>
+        <button id="add-airport-btn" class="btn-primary">Add New Airport</button>
+        
+        <div class="search-controls">
+            <input type="text" id="search-airport" placeholder="Search airports...">
+            <button id="search-btn" class="btn-secondary">Search</button>
+        </div>
+        
+        <table id="airport-table">
+            <thead>
+                <tr>
+                    <th>Airport Code</th>
+                    <th>Airport Name</th>
+                    <th>City</th>
+                    <th>Country</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filled by JavaScript -->
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Airport Modal -->
+    <div id="airport-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Add New Airport</h2>
+            <form id="airport-form">
+                <input type="hidden" id="airport-code-original" name="airport-code-original">
+                
+                <div class="form-group">
+                    <label for="airport-code">Airport Code (3 letters):</label>
+                    <input type="text" id="airport-code" name="airport-code" maxlength="3" pattern="[A-Za-z]{3}" 
+                           title="3-letter airport code" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="airport-name">Airport Name:</label>
+                    <input type="text" id="airport-name" name="airport-name" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City:</label>
+                        <input type="text" id="city" name="city" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="country">Country:</label>
+                        <input type="text" id="country" name="country" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/airport.js"></script>
+</body>
+</html>

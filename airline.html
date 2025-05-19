@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airline Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Flight Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="flight.html">Flight</a></li>
+                <li><a href="passenger.html">Passenger</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="airport.html">Airport</a></li>
+                <li><a href="airline.html">Airline</a></li>
+                <li><a href="aircraft.html">Aircraft</a></li>
+                <li><a href="baggage.html">Baggage</a></li>
+                <li><a href="payment.html">Payment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Airline Management</h2>
+        <button id="add-airline-btn" class="btn-primary">Add New Airline</button>
+        
+        <div class="search-controls">
+            <input type="text" id="search-airline" placeholder="Search airlines...">
+            <button id="search-btn" class="btn-secondary">Search</button>
+        </div>
+        
+        <table id="airline-table">
+            <thead>
+                <tr>
+                    <th>Airline Code</th>
+                    <th>Airline Name</th>
+                    <th>Contact Number</th>
+                    <th>Operating Region</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filled by JavaScript -->
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Airline Modal -->
+    <div id="airline-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Add New Airline</h2>
+            <form id="airline-form">
+                <input type="hidden" id="airline-code-original" name="airline-code-original">
+                
+                <div class="form-group">
+                    <label for="airline-code">Airline Code (2 letters):</label>
+                    <input type="text" id="airline-code" name="airline-code" maxlength="2" pattern="[A-Za-z]{2}" 
+                           title="2-letter airline code" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="airline-name">Airline Name:</label>
+                    <input type="text" id="airline-name" name="airline-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact-number">Contact Number:</label>
+                    <input type="tel" id="contact-number" name="contact-number">
+                </div>
+                
+                <div class="form-group">
+                    <label for="operating-region">Operating Region:</label>
+                    <input type="text" id="operating-region" name="operating-region">
+                </div>
+                
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/airline.js"></script>
+</body>
+</html>

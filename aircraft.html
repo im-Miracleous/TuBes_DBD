@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aircraft Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Flight Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="flight.html">Flight</a></li>
+                <li><a href="passenger.html">Passenger</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="airport.html">Airport</a></li>
+                <li><a href="airline.html">Airline</a></li>
+                <li><a href="aircraft.html">Aircraft</a></li>
+                <li><a href="baggage.html">Baggage</a></li>
+                <li><a href="payment.html">Payment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Aircraft Management</h2>
+        <button id="add-aircraft-btn" class="btn-primary">Add New Aircraft</button>
+        
+        <div class="search-controls">
+            <input type="text" id="search-aircraft" placeholder="Search aircraft...">
+            <button id="search-btn" class="btn-secondary">Search</button>
+        </div>
+        
+        <table id="aircraft-table">
+            <thead>
+                <tr>
+                    <th>Aircraft ID</th>
+                    <th>Type</th>
+                    <th>Registration</th>
+                    <th>Capacity</th>
+                    <th>Airline</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filled by JavaScript -->
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Aircraft Modal -->
+    <div id="aircraft-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Add New Aircraft</h2>
+            <form id="aircraft-form">
+                <input type="hidden" id="aircraft-id" name="aircraft-id">
+                
+                <div class="form-group">
+                    <label for="aircraft-type">Aircraft Type:</label>
+                    <input type="text" id="aircraft-type" name="aircraft-type" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registration-number">Registration Number:</label>
+                    <input type="text" id="registration-number" name="registration-number" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="capacity">Capacity:</label>
+                    <input type="number" id="capacity" name="capacity" min="1" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="airline-code">Airline:</label>
+                    <select id="airline-code" name="airline-code" required>
+                        <option value="">Select Airline</option>
+                        <!-- Filled by JavaScript -->
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/aircraft.js"></script>
+</body>
+</html>

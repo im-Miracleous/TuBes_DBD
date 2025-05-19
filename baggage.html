@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baggage Management</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Flight Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="flight.html">Flight</a></li>
+                <li><a href="passenger.html">Passenger</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="airport.html">Airport</a></li>
+                <li><a href="airline.html">Airline</a></li>
+                <li><a href="aircraft.html">Aircraft</a></li>
+                <li><a href="baggage.html">Baggage</a></li>
+                <li><a href="payment.html">Payment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Baggage Management</h2>
+        <button id="add-baggage-btn" class="btn-primary">Add New Baggage</button>
+        
+        <div class="filter-controls">
+            <select id="status-filter">
+                <option value="">All Statuses</option>
+                <option value="Checked In">Checked In</option>
+                <option value="Onboard">Onboard</option>
+                <option value="In Transit">In Transit</option>
+                <option value="Lost">Lost</option>
+            </select>
+            <select id="type-filter">
+                <option value="">All Types</option>
+                <option value="Checked">Checked</option>
+                <option value="Carry-on">Carry-on</option>
+            </select>
+            <button id="apply-filter" class="btn-secondary">Apply Filter</button>
+        </div>
+        
+        <table id="baggage-table">
+            <thead>
+                <tr>
+                    <th>Baggage ID</th>
+                    <th>Booking ID</th>
+                    <th>Passenger</th>
+                    <th>Weight (kg)</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Filled by JavaScript -->
+            </tbody>
+        </table>
+    </main>
+
+    <!-- Baggage Modal -->
+    <div id="baggage-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title">Add New Baggage</h2>
+            <form id="baggage-form">
+                <input type="hidden" id="baggage-id" name="baggage-id">
+                
+                <div class="form-group">
+                    <label for="booking-id">Booking:</label>
+                    <select id="booking-id" name="booking-id" required>
+                        <option value="">Select Booking</option>
+                        <!-- Filled by JavaScript -->
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="weight">Weight (kg):</label>
+                        <input type="number" id="weight" name="weight" min="0" step="0.1" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="baggage-type">Type:</label>
+                        <select id="baggage-type" name="baggage-type" required>
+                            <option value="Checked">Checked</option>
+                            <option value="Carry-on">Carry-on</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select id="status" name="status" required>
+                        <option value="Checked In">Checked In</option>
+                        <option value="Onboard">Onboard</option>
+                        <option value="In Transit">In Transit</option>
+                        <option value="Lost">Lost</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/baggage.js"></script>
+</body>
+</html>

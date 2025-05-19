@@ -1,0 +1,128 @@
+document.addEventListener('DOMContentLoaded', function() {
+    loadDashboardStats();
+    loadRecentFlights();
+});
+
+function loadDashboardStats() {
+    // Load upcoming flights count
+    fetch('php/api/flight/read.php?status=Terjadwal')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('upcoming-flights').textContent = data.length;
+        })
+        .catch(error => {
+            console.error('Error loading upcoming flights:', error);
+            document.getElementById('upcoming-flights').textContent = 'Error';
+        });
+    
+    // Load total passengers count
+    fetch('php/api/passenger/read.php')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('total-passengers').textContent = data.length;
+        })
+        .catch(error => {
+            console.error('Error loading passengers:', error);
+            document.getElementById('total-passengers').textContent = 'Error';
+        });
+    
+    // Load active bookings count
+    fetch('php/api/booking/read.php?status=Paid')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('active-bookings').textContent = data.length;
+        })
+        .catch(error => {
+            console.error('Error loading bookings:', error);
+            document.getElementById('active-bookings').textContent = 'Error';
+        });
+    
+    // Load total airlines count
+    fetch('php/api/airline/read.php')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('total-airlines').textContent = data.length;
+        })
+        .catch(error => {
+            console.error('Error loading airlines:', error);
+            document.getElementById('total-airlines').textContent = 'Error';
+        });
+}
+
+function loadRecentFlights() {
+    const today = new Date();
+    const nextWeek = new Date();
+    nextWeek.setDate(today.getDate() + 7);
+    
+    const todayStr = today.toISOString().split('T')[0];
+    const nextWeekStr = nextWeek.toISOString().split('T')[0];
+    
+    fetch(`php/api/flight/read.php?date_from=${todayStr}&date_to=${nextWeekStr}`)
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.querySelector('#recent-flights-table tbody');
+            tableBody.innerHTML = '';
+            
+            // Sort by departure time
+            data.sort((a, b) => new Date(a.DepartureDateTime) - new Date(b.DepartureDateTime));
+            
+            // Show only the next 5 flights
+            const recentFlights = data.slice(0, 5);
+            
+            if (recentFlights.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td colspan="5" class="no-data">No upcoming flights</td>`;
+                tableBody.appendChild(row);
+                return;
+            }
+            
+            recentFlights.forEach(flight => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${flight.FlightNumber}</td>
+                    <td>${flight.AirlineCode}</td>
+                    <td>${formatDateTime(flight.DepartureDateTime)}</td>
+                    <td>${formatDateTime(flight.ArrivalDateTime)}</td>
+                    <td><span class="status-badge ${getStatusClass(flight.Status)}">${translateStatus(flight.Status)}</span></td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading recent flights:', error);
+            document.querySelector('#recent-flights-table tbody').innerHTML = `
+                <tr><td colspan="5" class="error">Error loading flights</td></tr>
+            `;
+        });
+}
+
+// Helper functions
+function formatDateTime(datetime) {
+    if (!datetime) return '';
+    const options = { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit', 
+        minute: '2-digit'
+    };
+    return new Date(datetime).toLocaleString('en-US', options);
+}
+
+function translateStatus(status) {
+    const translations = {
+        'Terjadwal': 'Scheduled',
+        'Ditunda': 'Delayed',
+        'Dibatalkan': 'Cancelled'
+    };
+    return translations[status] || status;
+}
+
+function getStatusClass(status) {
+    const classes = {
+        'Terjadwal': 'status-scheduled',
+        'Ditunda': 'status-delayed',
+        'Dibatalkan': 'status-cancelled'
+    };
+    return classes[status] || '';
+}

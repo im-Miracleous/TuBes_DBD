@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Flight Management System</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="flight.html">Flight</a></li>
+                <li><a href="passenger.html">Passenger</a></li>
+                <li><a href="booking.html">Booking</a></li>
+                <li><a href="airport.html">Airport</a></li>
+                <li><a href="airline.html">Airline</a></li>
+                <li><a href="aircraft.html">Aircraft</a></li>
+                <li><a href="baggage.html">Baggage</a></li>
+                <li><a href="payment.html">Payment</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>Dashboard</h2>
+        
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <h3>Upcoming Flights</h3>
+                <p id="upcoming-flights">Loading...</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Total Passengers</h3>
+                <p id="total-passengers">Loading...</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Active Bookings</h3>
+                <p id="active-bookings">Loading...</p>
+            </div>
+            
+            <div class="stat-card">
+                <h3>Registered Airlines</h3>
+                <p id="total-airlines">Loading...</p>
+            </div>
+        </div>
+        
+        <div class="recent-flights">
+            <h3>Recent Flights</h3>
+            <table id="recent-flights-table">
+                <thead>
+                    <tr>
+                        <th>Flight Number</th>
+                        <th>Airline</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Filled by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
