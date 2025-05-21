@@ -190,15 +190,25 @@ function handleBookingSubmit(e) {
     const formData = new FormData(e.target);
     const bookingId = formData.get('booking-id');
     const isEdit = !!bookingId;
-    
+
+    // Build JSON object with correct keys
+    const data = {
+        'flight-id': formData.get('flight-id'),
+        'passenger-id': formData.get('passenger-id'),
+        'payment-status': formData.get('payment-status')
+    };
+
     const url = isEdit 
         ? `php/api/booking/update.php?id=${bookingId}`
         : 'php/api/booking/create.php';
     const method = isEdit ? 'PUT' : 'POST';
-    
+
     fetch(url, {
         method: method,
-        body: formData
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
     })
     .then(response => response.json())
     .then(data => {
@@ -236,4 +246,24 @@ function getPaymentStatusClass(status) {
         'Rescheduled': 'status-rescheduled'
     };
     return classes[status] || '';
+}
+
+// Responsive nav toggle
+const navToggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+
+if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        navToggle.classList.toggle('active'); // Toggle active class for hamburger/arrow
+    });
+    // Only close nav on mobile if menu is open
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                navToggle.classList.remove('active'); // Remove active from toggle on close
+            }
+        });
+    });
 }

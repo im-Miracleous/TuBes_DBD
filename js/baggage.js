@@ -131,7 +131,7 @@ function handleEditBaggage(e) {
             document.getElementById('modal-title').textContent = 'Edit Baggage';
             document.getElementById('baggage-id').value = baggage.BaggageID;
             document.getElementById('booking-id').value = baggage.BookingID;
-            document.getElementById('weight').value = baggage.Weight;
+            document.getElementById('weight').value = (baggage.Weight !== null && baggage.Weight !== undefined && baggage.Weight !== '') ? baggage.Weight : 0;
             document.getElementById('baggage-type').value = baggage.BaggageType;
             document.getElementById('status').value = baggage.Status;
             
@@ -171,15 +171,26 @@ function handleBaggageSubmit(e) {
     const formData = new FormData(e.target);
     const baggageId = formData.get('baggage-id');
     const isEdit = !!baggageId;
-    
+
+    // Build JSON object with correct keys and valid number for weight
+    const data = {
+        'booking-id': formData.get('booking-id'),
+        'weight': formData.get('weight') ? parseFloat(formData.get('weight')) : 0,
+        'baggage-type': formData.get('baggage-type'),
+        'status': formData.get('status')
+    };
+
     const url = isEdit 
         ? `php/api/baggage/update.php?id=${baggageId}`
         : 'php/api/baggage/create.php';
     const method = isEdit ? 'PUT' : 'POST';
-    
+
     fetch(url, {
         method: method,
-        body: formData
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
     })
     .then(response => response.json())
     .then(data => {
@@ -204,4 +215,24 @@ function getStatusClass(status) {
         'Lost': 'status-lost'
     };
     return classes[status] || '';
+}
+
+// Responsive nav toggle
+const navToggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+
+if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        navToggle.classList.toggle('active'); // Toggle active class for hamburger/arrow
+    });
+    // Only close nav on mobile if menu is open
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                navToggle.classList.remove('active'); // Remove active from toggle on close
+            }
+        });
+    });
 }

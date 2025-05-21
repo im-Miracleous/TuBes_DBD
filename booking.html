@@ -1,99 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Booking Management</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
     <header>
-        <h1>Flight Management System</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Dashboard</a></li>
-                <li><a href="flight.html">Flight</a></li>
-                <li><a href="passenger.html">Passenger</a></li>
-                <li><a href="booking.html">Booking</a></li>
-                <li><a href="airport.html">Airport</a></li>
-                <li><a href="airline.html">Airline</a></li>
-                <li><a href="aircraft.html">Aircraft</a></li>
-                <li><a href="baggage.html">Baggage</a></li>
-                <li><a href="payment.html">Payment</a></li>
-            </ul>
-        </nav>
+      <h1>Flight Management System</h1>
+      <nav>
+        <button
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-label="Toggle navigation"
+        >
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <div class="nav-flex" id="nav-links">
+          <ul class="nav-left">
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="flight.html">Flight</a></li>
+            <li><a href="passenger.html">Passenger</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="airport.html">Airport</a></li>
+          </ul>
+          <ul class="nav-right">
+            <li><a href="airline.html">Airline</a></li>
+            <li><a href="aircraft.html">Aircraft</a></li>
+            <li><a href="baggage.html">Baggage</a></li>
+            <li><a href="payment.html">Payment</a></li>
+          </ul>
+        </div>
+      </nav>
     </header>
 
     <main class="container">
-        <h2>Booking Management</h2>
-        <button id="add-booking-btn" class="btn-primary">Add New Booking</button>
-        
-        <div class="filter-controls">
-            <select id="status-filter">
-                <option value="">All Statuses</option>
-                <option value="Pending">Pending</option>
-                <option value="Paid">Paid</option>
-                <option value="Cancelled">Cancelled</option>
-                <option value="Rescheduled">Rescheduled</option>
-            </select>
-            <input type="date" id="date-filter">
-            <button id="apply-filter" class="btn-secondary">Apply Filter</button>
-        </div>
-        
-        <table id="booking-table">
-            <thead>
-                <tr>
-                    <th>Booking ID</th>
-                    <th>Flight</th>
-                    <th>Passenger</th>
-                    <th>Booking Date</th>
-                    <th>Payment Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Filled by JavaScript -->
-            </tbody>
-        </table>
+      <h2>Booking Management</h2>
+      <button id="add-booking-btn" class="btn-primary">Add New Booking</button>
+
+      <div class="filter-controls">
+        <select id="status-filter">
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="Paid">Paid</option>
+          <option value="Cancelled">Cancelled</option>
+          <option value="Rescheduled">Rescheduled</option>
+        </select>
+        <input type="date" id="date-filter" />
+        <button id="apply-filter" class="btn-secondary">Apply Filter</button>
+      </div>
+
+      <table id="booking-table">
+        <thead>
+          <tr>
+            <th>Booking ID</th>
+            <th>Flight</th>
+            <th>Passenger</th>
+            <th>Booking Date</th>
+            <th>Payment Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Filled by JavaScript -->
+        </tbody>
+      </table>
     </main>
 
     <!-- Booking Modal -->
     <div id="booking-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2 id="modal-title">Add New Booking</h2>
-            <form id="booking-form">
-                <input type="hidden" id="booking-id" name="booking-id">
-                
-                <div class="form-group">
-                    <label for="flight-id">Flight:</label>
-                    <select id="flight-id" name="flight-id" required>
-                        <option value="">Select Flight</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="passenger-id">Passenger:</label>
-                    <select id="passenger-id" name="passenger-id" required>
-                        <option value="">Select Passenger</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="payment-status">Payment Status:</label>
-                    <select id="payment-status" name="payment-status" required>
-                        <option value="Pending">Pending</option>
-                        <option value="Paid">Paid</option>
-                        <option value="Cancelled">Cancelled</option>
-                        <option value="Rescheduled">Rescheduled</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="btn-primary">Save</button>
-            </form>
-        </div>
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2 id="modal-title">Add New Booking</h2>
+        <form id="booking-form">
+          <input type="hidden" id="booking-id" name="booking-id" />
+
+          <div class="form-group">
+            <label for="flight-id">Flight:</label>
+            <select id="flight-id" name="flight-id" required>
+              <option value="">Select Flight</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="passenger-id">Passenger:</label>
+            <select id="passenger-id" name="passenger-id" required>
+              <option value="">Select Passenger</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="payment-status">Payment Status:</label>
+            <select id="payment-status" name="payment-status" required>
+              <option value="Pending">Pending</option>
+              <option value="Paid">Paid</option>
+              <option value="Cancelled">Cancelled</option>
+              <option value="Rescheduled">Rescheduled</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary">Save</button>
+        </form>
+      </div>
     </div>
 
     <script src="js/booking.js"></script>
-</body>
+    <script src="js/script.js"></script>
+  </body>
 </html>

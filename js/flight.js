@@ -158,7 +158,7 @@ function handleFlightSubmit(e) {
     const formData = new FormData(e.target);
     const flightId = formData.get('flight-id');
     const isEdit = !!flightId;
-    
+
     // Validate departure before arrival
     const departure = new Date(formData.get('departure-datetime'));
     const arrival = new Date(formData.get('arrival-datetime'));
@@ -166,15 +166,31 @@ function handleFlightSubmit(e) {
         alert('Arrival must be after departure');
         return;
     }
-    
+
+    // Convert FormData to JSON object with correct keys
+    const data = {
+        'flight-number': formData.get('flight-number'),
+        'airline-code': formData.get('airline-code'),
+        'departure-datetime': formData.get('departure-datetime'),
+        'arrival-datetime': formData.get('arrival-datetime'),
+        'origin-airport': formData.get('origin-airport'),
+        'destination-airport': formData.get('destination-airport'),
+        'available-seats': formData.get('available-seats'),
+        'status': formData.get('status')
+    };
+
+    console.log('Submitting flight data:', data);
     const url = isEdit 
         ? `php/api/flight/update.php?id=${flightId}`
         : 'php/api/flight/create.php';
     const method = isEdit ? 'PUT' : 'POST';
-    
+
     fetch(url, {
         method: method,
-        body: formData
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
     })
     .then(response => response.json())
     .then(data => {
@@ -270,4 +286,24 @@ function getStatusClass(status) {
         'Dibatalkan': 'status-cancelled'
     };
     return classes[status] || '';
+}
+
+// Responsive nav toggle
+const navToggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+
+if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        navToggle.classList.toggle('active'); // Toggle active class for hamburger/arrow
+    });
+    // Only close nav on mobile if menu is open
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                navToggle.classList.remove('active'); // Remove active from toggle on close
+            }
+        });
+    });
 }

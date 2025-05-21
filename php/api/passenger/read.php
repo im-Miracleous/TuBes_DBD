@@ -42,7 +42,7 @@ if ($passengerId) {
         $params = array_fill(0, 4, $searchParam);
     }
     
-    $query .= " ORDER BY LastName, FirstName";
+    $query .= " ORDER BY PassengerID DESC";
     
     $stmt = $db->prepare($query);
     $stmt->execute($params);

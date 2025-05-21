@@ -1,27 +1,42 @@
 <?php
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: PUT");
+header("Access-Control-Allow-Methods: PUT, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
 require_once '../../config/database.php';
 require_once '../../includes/functions.php';
 
+// Handle preflight request
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    exit(0);
+}
+
 $database = new Database();
 $db = $database->getConnection();
 
+// Get passenger ID from URL
 $passengerId = $_GET['id'] ?? null;
-$data = json_decode(file_get_contents("php://input"), true);
+
+// Get JSON input
+$rawInput = file_get_contents('php://input');
+if (empty($rawInput)) {
+    sendResponse(false, 'No input data provided.');
+}
+$input = json_decode($rawInput, true);
+if (json_last_error() !== JSON_ERROR_NONE || !is_array($input)) {
+    sendResponse(false, 'Invalid JSON input');
+}
 
 if (!$passengerId) {
     sendResponse(false, 'Passenger ID is required.');
 }
 
 // Sanitize input
-$firstName = sanitizeInput($data['first-name'] ?? '');
-$lastName = sanitizeInput($data['last-name'] ?? '');
-$email = sanitizeInput($data['email'] ?? '');
-$passportNumber = sanitizeInput($data['passport-number'] ?? '');
+$firstName = sanitizeInput($input['first_name'] ?? '');
+$lastName = sanitizeInput($input['last_name'] ?? '');
+$email = sanitizeInput($input['email'] ?? '');
+$passportNumber = sanitizeInput($input['passport_number'] ?? '');
 
 // Validate
 if (empty($firstName)) {

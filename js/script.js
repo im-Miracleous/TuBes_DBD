@@ -63,8 +63,8 @@ function loadRecentFlights() {
             const tableBody = document.querySelector('#recent-flights-table tbody');
             tableBody.innerHTML = '';
             
-            // Sort by departure time
-            data.sort((a, b) => new Date(a.DepartureDateTime) - new Date(b.DepartureDateTime));
+            // Sort by departure time (latest first)
+            data.sort((a, b) => new Date(b.DepartureDateTime) - new Date(a.DepartureDateTime));
             
             // Show only the next 5 flights
             const recentFlights = data.slice(0, 5);
@@ -125,4 +125,24 @@ function getStatusClass(status) {
         'Dibatalkan': 'status-cancelled'
     };
     return classes[status] || '';
+}
+
+// Responsive nav toggle
+const navToggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+
+if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        navToggle.classList.toggle('active'); // Toggle active class for hamburger/arrow
+    });
+    // Only close nav on mobile if menu is open
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                navToggle.classList.remove('active'); // Remove active from toggle on close
+            }
+        });
+    });
 }

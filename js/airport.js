@@ -143,19 +143,29 @@ function handleAirportSubmit(e) {
     const formData = new FormData(e.target);
     const originalCode = formData.get('airport-code-original');
     const isEdit = !!originalCode;
-    
+
     // Convert airport code to uppercase
     const airportCode = formData.get('airport-code').toUpperCase();
-    formData.set('airport-code', airportCode);
-    
+
+    // Build JSON object with correct keys
+    const data = {
+        'airport-code': airportCode,
+        'airport-name': formData.get('airport-name'),
+        'city': formData.get('city'),
+        'country': formData.get('country')
+    };
+
     const url = isEdit 
         ? `php/api/airport/update.php?code=${originalCode}`
         : 'php/api/airport/create.php';
     const method = isEdit ? 'PUT' : 'POST';
-    
+
     fetch(url, {
         method: method,
-        body: formData
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
     })
     .then(response => response.json())
     .then(data => {
@@ -169,5 +179,25 @@ function handleAirportSubmit(e) {
     .catch(error => {
         console.error('Error:', error);
         alert('An error occurred. Please try again.');
+    });
+}
+
+// Responsive nav toggle
+const navToggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+
+if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        navToggle.classList.toggle('active'); // Toggle active class for hamburger/arrow
+    });
+    // Only close nav on mobile if menu is open
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                navToggle.classList.remove('active'); // Remove active from toggle on close
+            }
+        });
     });
 }

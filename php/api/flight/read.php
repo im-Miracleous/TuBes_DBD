@@ -67,7 +67,7 @@ if ($flightId) {
         $query .= " WHERE " . implode(" AND ", $conditions);
     }
     
-    $query .= " ORDER BY f.DepartureDateTime ASC";
+    $query .= " ORDER BY f.DepartureDateTime DESC";
     
     $stmt = $db->prepare($query);
     $stmt->execute($params);

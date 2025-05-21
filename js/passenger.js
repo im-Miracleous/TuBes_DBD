@@ -140,24 +140,44 @@ function handleDeletePassenger(e) {
 
 function handlePassengerSubmit(e) {
     e.preventDefault();
-    
-    const formData = new FormData(e.target);
-    const passengerId = formData.get('passenger-id');
+
+    const passengerId = document.getElementById('passenger-id').value;
     const isEdit = !!passengerId;
-    
+
+    // Collect form data
+    const formData = {
+        first_name: document.getElementById('first-name').value,
+        last_name: document.getElementById('last-name').value,
+        email: document.getElementById('email').value,
+        passport_number: document.getElementById('passport-number').value
+    };
+
     const url = isEdit 
         ? `php/api/passenger/update.php?id=${passengerId}`
         : 'php/api/passenger/create.php';
-    const method = isEdit ? 'PUT' : 'POST';
-    
+
+    // Ensure body is always valid JSON
+    const body = JSON.stringify(formData);
+
+    // Debug: log outgoing body
+    // console.log('Sending body:', body);
+
     fetch(url, {
-        method: method,
-        body: formData
+        method: isEdit ? 'PUT' : 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: body
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
-            fetchPassengers();
+            fetchPassengers(); // Refresh the table
             document.getElementById('passenger-modal').style.display = 'none';
         } else {
             alert('Error: ' + (data.message || 'Operation failed'));
@@ -166,5 +186,25 @@ function handlePassengerSubmit(e) {
     .catch(error => {
         console.error('Error:', error);
         alert('An error occurred. Please try again.');
+    });
+}
+
+// Responsive nav toggle
+const navToggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+
+if (navToggle && navLinks) {
+    navToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        navToggle.classList.toggle('active'); // Toggle active class for hamburger/arrow
+    });
+    // Only close nav on mobile if menu is open
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                navToggle.classList.remove('active'); // Remove active from toggle on close
+            }
+        });
     });
 }
