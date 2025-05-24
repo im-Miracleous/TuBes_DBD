@@ -146,18 +146,49 @@ function handlePassengerSubmit(e) {
 
     // Collect form data
     const formData = {
-        first_name: document.getElementById('first-name').value,
-        last_name: document.getElementById('last-name').value,
-        email: document.getElementById('email').value,
-        passport_number: document.getElementById('passport-number').value
+        'first-name': document.getElementById('first-name').value.trim(),
+        'last-name': document.getElementById('last-name').value.trim(),
+        'email': document.getElementById('email').value.trim(),
+        'passport-number': document.getElementById('passport-number').value.trim()
     };
+
+    // Validate required fields
+    if (!formData['first-name']) {
+        alert('First name is required');
+        return;
+    }
+    if (!formData['last-name']) {
+        alert('Last name is required');
+        return;
+    }
+    if (!formData['email']) {
+        alert('Email is required');
+        return;
+    }
+    if (!formData['passport-number']) {
+        alert('Passport number is required');
+        return;
+    }
 
     const url = isEdit 
         ? `php/api/passenger/update.php?id=${passengerId}`
         : 'php/api/passenger/create.php';
 
+    // For create, use 'first-name', 'last-name', etc. For update, use 'first_name', 'last_name', etc.
+    let body;
+    if (isEdit) {
+        body = JSON.stringify({
+            first_name: formData['first-name'],
+            last_name: formData['last-name'],
+            email: formData['email'],
+            passport_number: formData['passport-number']
+        });
+    } else {
+        body = JSON.stringify(formData);
+    }
+
     // Ensure body is always valid JSON
-    const body = JSON.stringify(formData);
+    // const body = JSON.stringify(formData);
 
     // Debug: log outgoing body
     // console.log('Sending body:', body);
