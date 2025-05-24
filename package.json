@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@firebase/data-connect": "^0.3.9",
+    "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
+    "firebase": "^11.8.1"
+  }
+}
